@@ -1,0 +1,271 @@
+Needs["XchainFactorization`", "XchainFactorization.m"];
+GStyle = {
+   ImageSize -> 120,
+   ImagePadding -> 10,
+   VertexLabels -> "Name",
+   VertexSize -> Medium
+   };
+
+
+(*
+To start the X-chain factorization, one should first use \
+"FactorizationReset[]" to clear the old memeries.;
+
+XResource::usage="Return the X-resource of correlation index c";
+Options: 
+Input->"Set" or Output->"Binary"
+;
+
+CorrelationIndex::usage="Return the correlation index of X-resource \
+xi";
+Options: 
+Input->"Set" or Output->"Binary"
+;
+
+ParityOfXResource::usage="Return the parity of XResource";
+*)
+FactorizationReset[];
+G = Graph[{1 \[UndirectedEdge] 2, 2 \[UndirectedEdge] 3, 
+   3 \[UndirectedEdge] 4, 4 \[UndirectedEdge] 1, 
+   1 \[UndirectedEdge] 3}, GStyle]
+
+"XResource[G,c]: \!\(\*SuperscriptBox[\(\[Xi]\), \((c)\)]\) with \
+c={1,3}"
+XResource[G, {1, 3}]
+XResource[G, {1, 0, 1, 0}, Input -> "Binary"]
+XResource[G, {1, 3}, Output -> "Binary"]
+
+"CorrletionIndex[G,\[Xi]]: \!\(\*SubscriptBox[\(c\), \(\[Xi]\)]\) \
+with \[Xi]={1,2,3,4}"
+CorrelationIndex[G, {1, 2, 3, 4}]
+CorrelationIndex[G, {1, 1, 1, 1}, Input -> "Binary"]
+CorrelationIndex[G, {1, 2, 3, 4}, Output -> "Binary"] // Normal
+
+"ParityOfXResource[G,\[Xi]]: \!\(\*SubscriptBox[\(\[Pi]\), \(G\)]\)(\
+\[Xi]) with \[Xi]={1,2,3}"
+ParityOfXResource[G, {1, 2, 3}]
+
+
+
+(*
+Xchains::usage="Return the whole X-chains of G";
+
+XchainGenerators::usage="Return the mutually not including X-chain \
+generators of G";
+
+CorrelationGroup::usage="Return the correlation group generators";
+
+CorrelationGroupGenerators::usage="Return the correlation group \
+generators";
+*)
+FactorizationReset[];
+G = Graph[{1 \[UndirectedEdge] 2, 2 \[UndirectedEdge] 3, 
+   3 \[UndirectedEdge] 4, 4 \[UndirectedEdge] 1, 
+   1 \[UndirectedEdge] 3}, GStyle]
+
+"Xchains[G]: \
+\[LeftAngleBracket]\!\(\*SubscriptBox[\(\[CapitalGamma]\), \(G\)]\)\
+\[RightAngleBracket]"
+Xchains[G]
+Xchains[G, Output -> "Binary"] // Normal
+
+"XchainGenerators[G]: \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(G\)]\)"
+XchainGenerators[G]
+XchainGenerators[G, Output -> "Binary"] // Normal
+
+
+
+
+(*
+NegParityXchainGenerators::usage="Return the X chian geneartors with \
+negative parity";
+
+FundamentalXGamma::usage="Return the fundamental Xbasis of graph";
+
+XchainState::usage="Return the X-chain state of G with xi";
+
+XchainStates::usage="Return the set of X-chain states of G";
+*)
+FactorizationReset[];
+G = Graph[{1 \[UndirectedEdge] 2, 2 \[UndirectedEdge] 3, 
+   3 \[UndirectedEdge] 4, 4 \[UndirectedEdge] 1, 
+   1 \[UndirectedEdge] 3}, GStyle]
+
+"NegParityXchainGenerators[G]: \!\(\*SuperscriptBox[\(\[Gamma]\), \(-\
+\)]\)"
+NegParityXchainGenerators[G]
+NegParityXchainGenerators[G, Output -> "Binary"] // Normal
+
+"FundamentalXGamma[G]: |\!\(\*SubscriptBox[\(\[Psi]\), \
+\(\[Diameter]\)]\)(\[Xi])\[RightAngleBracket]"
+FundamentalXGamma[G]
+FundamentalXGamma[G, Output -> "Binary"] // Normal
+
+"XchainState[G,\[Xi]]: |\!\(\*SubscriptBox[\(\[Psi]\), \
+\(\[Diameter]\)]\)(\[Xi])\[RightAngleBracket] with \[Xi]={2,3}"
+XchainState[G, {2, 3}] // Normal
+XchainState[G, {0, 1, 1, 0, 0}, Input -> "Binary"] // Normal
+XchainState[G, {2, 3}, Output -> "Braket"]
+
+"XchainStates[G]: \!\(\*SubsuperscriptBox[\(\[CapitalPsi]\), \
+SubscriptBox[\(\[ScriptCapitalK]\), \(G\)], \(\[EmptySet]\)]\)={|\!\(\
+\*SubscriptBox[\(\[Psi]\), \(\[EmptySet]\)]\)(\[Xi])\
+\[RightAngleBracket]:\[Xi]\[Element]\!\(\*SubscriptBox[\(\
+\[ScriptCapitalK]\), \(G\)]\)}"
+XchainStates[G] // Normal
+XchainStates[G, Output -> "Braket"]
+
+
+
+
+(*
+GraphStateInX::usage="Return graph state represenation in X-basis";
+	Output->"Vector" :(Default), return the graph state as vector;
+	Output->"Braket" : return the graph state as the superposition of \
+the computational bases in braket;
+
+GraphStateInZ::usage="Return graph state represenation in Z-basis";
+	Output->"Vector" :(Default), return the graph state as vector;
+	Output->"Braket" : return the graph state as the superposition of \
+the computational bases in braket;
+
+CorrelationState::usage="Return Kappa-correlation state of a graph \
+state";
+	Output->"Vector" :(Default), return the graph state as vector;
+	Output->"Braket" : return the graph state as the superposition of \
+the computational bases in braket;
+
+*)
+FactorizationReset[];
+G = Graph[{1 \[UndirectedEdge] 2, 2 \[UndirectedEdge] 3, 
+   3 \[UndirectedEdge] 4, 4 \[UndirectedEdge] 1, 
+   1 \[UndirectedEdge] 3}, GStyle]
+
+"GraphStateInX[G]: |G\[RightAngleBracket]"
+GraphStateInX[G] // Normal
+GraphStateInX[G, Output -> "Braket"]
+
+"GraphStateInZ[G]: |G\[RightAngleBracket]"
+GraphStateInZ[G] // Normal
+GraphStateInZ[G, Output -> "Braket"]
+
+"CorrelationState[G,\[Xi]]: |\!\(\*SubscriptBox[\(\[Psi]\), \(\
+\[ScriptCapitalK]\)]\)(\[Xi])\[RightAngleBracket] with the generating \
+set \[ScriptCapitalK]={{2}}"
+CorrelationState[G, {{2}}] // Normal
+CorrelationState[G, {{2}}, Output -> "Braket"]
+"CorrelationState[G,\[Xi]]: |\!\(\*SubscriptBox[\(\[Psi]\), \(\
+\[ScriptCapitalK]\)]\)(\[Xi])\[RightAngleBracket] with the whole \
+group \[LeftAngleBracket]\[ScriptCapitalK]\[RightAngleBracket]={{},{2}\
+} as Input"
+CorrelationState[G, {{}, {2}}, Input -> "Group"] // Normal
+
+
+
+
+(*
+ZBiasDegree::usage="Z-bias degree of a graph state";
+GraphStateOverlap::usage="Overlap of two graph states";
+*)
+FactorizationReset[];
+nVertex = 6;
+G1 = RandomGraph[{nVertex, 13}, GStyle]
+G2 = RandomGraph[{nVertex, 12}, GStyle]
+"Graph symmetric difference G1\[CapitalDelta]G2:"
+G1XorG2 = 
+ GraphUnion[GraphDifference[G1, G2], GraphDifference[G2, G1], GStyle]
+"|G1\[CapitalDelta]G2\[RightAngleBracket] in X-basis:"
+GraphStateInX[G1XorG2, Output -> "Braket"]
+"The Z-bias degree of G1\[CapitalDelta]G2:"
+ZBiasDegree[G1XorG2]
+"The overlap of |G1\[RightAngleBracket] and |G2\[RightAngleBracket] \
+is equal to \[LeftAngleBracket]\!\(\*SubsuperscriptBox[\(0\), \(X\), \
+\(\[CircleTimes]n\)]\)|G1\[CapitalDelta]G2\[RightAngleBracket]:"
+GraphStateOverlap[G1, G2]
+
+
+
+
+(*
+SchmidtDecompCorrGroups::usage="Return the correlation group for \
+Schmidt decomposition of graph state regarding the bipartition A|B";
+
+SchmidtVectors::usage="Return the Schmidt vector of graph state \
+regarding the bipartition A|B";
+
+SchmidtDecompOfGraphState::usage="Return the Schmidt decomposition of \
+graph state regarding the bipartition A|B";
+*)
+FactorizationReset[];
+G = Graph[{1, 2, 3, 4, 5}, {1 \[UndirectedEdge] 2, 
+   1 \[UndirectedEdge] 3, 2 \[UndirectedEdge] 3, 
+   2 \[UndirectedEdge] 4, 2 \[UndirectedEdge] 5, 
+   3 \[UndirectedEdge] 4, 3 \[UndirectedEdge] 5, 
+   4 \[UndirectedEdge] 5}, 
+  Append[GStyle, 
+   VertexCoordinates -> {{2, 7}, {0, 4}, {4, 4}, {0, 0}, {4, 0}}]
+  ]
+
+"SchmidtDecompCorrGroups[G,A]: {\!\(\*SubsuperscriptBox[\(\
+\[ScriptCapitalK]\), \(A\), \((A)\)]\),\!\(\*SubsuperscriptBox[\(\
+\[ScriptCapitalK]\), \(\(~\)\(B\)\), \((A)\)]\),\!\(\*SuperscriptBox[\
+\(\[ScriptCapitalK]\), \((B)\)]\),\!\(\*SuperscriptBox[\(\
+\[ScriptCapitalK]\), \((A \[RightVector] B)\)]\)}"
+SchmidtDecompCorrGroups[G, {1, 2, 3}]
+SchmidtDecompCorrGroups[G, {1, 2, 3}, ReturnGenerator -> False]
+
+"SchmidtVectors[G,A]: {|\!\(\*SubscriptBox[\(\[Psi]\), \(\(\(A\)\(\
+\[RightFloor]\)\) \
+B\)]\)(\[Xi])\[RightAngleBracket]={\!\(\*SubscriptBox[\(\[Pi]\), \
+\(G\)]\)(\[Xi]),|\!\(\*SubsuperscriptBox[\(\[Phi]\), \(\(\(A\)\(\
+\[RightFloor]\)\) B\), \
+\((A)\)]\)(\[Xi])\[RightAngleBracket],|\!\(\*SubsuperscriptBox[\(\
+\[Phi]\), \(\(\(A\)\(\[RightFloor]\)\) B\), \((B)\)]\)(\[Xi])\
+\[RightAngleBracket],\[Xi]}: \[Xi]\[Element]\!\(\*SuperscriptBox[\(\
+\[ScriptCapitalK]\), \((A \[RightVector] B)\)]\)}"
+SchmidtVectors[G, {1, 2, 3}] // Normal
+SchmidtVectors[G, {1, 2, 3}, Output -> "Braket"]
+
+"SchmidtDecompOfGraphState[G,A]: \
+|G\[RightAngleBracket]=\!\(\*UnderscriptBox[\(\[Sum]\), \(\[Xi] = \
+\*SuperscriptBox[\(\[ScriptCapitalK]\), \(A \[RightVector] B\)]\)]\)|\
+\!\(\*SubscriptBox[\(\[Psi]\), \(\(\(A\)\(\[RightFloor]\)\) B\)]\)(\
+\[Xi])\[RightAngleBracket]}"
+SchmidtDecompOfGraphState[G, {1, 2, 3}]
+
+"CorrelationGroup[G]: \[LeftAngleBracket]\!\(\*SubscriptBox[\(\
+\[ScriptCapitalK]\), \(G\)]\)\[RightAngleBracket]"
+CorrelationGroup[G]
+CorrelationGroup[G, Output -> "Binary"] // Normal
+
+"CorrelationGroupGenerators[G]: \
+\!\(\*SubscriptBox[\(\[ScriptCapitalK]\), \(G\)]\)"
+CorrelationGroupGenerators[G]
+CorrelationGroupGenerators[G, Output -> "Binary"] // Normal
+
+
+"The global phase of GraphStateInX[G] is automatically corrected. If \
+the option of 'CorrectGlobalPhase' is set to 'False', then for some \
+graph state the X-chain facotorization end up with -|G\
+\[RightAngleBracket]"
+G = G = Graph[{1, 2, 3, 4, 5}, {1 \[UndirectedEdge] 2, 
+    1 \[UndirectedEdge] 3, 2 \[UndirectedEdge] 3, 
+    2 \[UndirectedEdge] 4, 2 \[UndirectedEdge] 5, 
+    3 \[UndirectedEdge] 4, 3 \[UndirectedEdge] 5, 
+    4 \[UndirectedEdge] 5}, 
+   Append[GStyle, 
+    VertexCoordinates -> {{2, 7}, {0, 4}, {4, 4}, {0, 0}, {4, 0}}]
+   ]
+FactorizationReset[];
+"GraphStateInX[G] with global phase correction:"
+GraphStateInX[G, Output -> "Braket"]
+"SchmidtDecompOfGraphState[G,{1,2,3}] with global phase correction: "
+SchmidtDecompOfGraphState[G, {1, 2, 3}]
+
+FactorizationReset[CorrectGlobalPhase -> False];
+"GraphStateInX[G] without global phase correction: |G\
+\[RightAngleBracket]"
+GraphStateInX[G, Output -> "Braket"]
+"SchmidtDecompOfGraphState[G,{1,2,3}] without global phase \
+correction: "
+SchmidtDecompOfGraphState[G, {1, 2, 3}]
